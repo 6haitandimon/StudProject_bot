@@ -7,6 +7,8 @@ class User {
         std::string userFirsName;
         std::string userLastName;
         std::string userId;
+        uint32_t direction;
+        
     public:
         User(std::string firstName, std::string lastName, std::string userId);
         std::string GetUserId();
@@ -15,5 +17,5 @@ class User {
         std::string GetName();
         void SetUserId(std::string userId);
         void SetUserName(std::string firstName, std::string lastName);
-
+    
 };

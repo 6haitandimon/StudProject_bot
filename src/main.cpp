@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <tgbot/tgbot.h>
 #include <vector>
-#include "include/token.h"
-#include "include/user.h"
+#include "token.h"
+#include "user.h"
 
 void CreateKayboard(const std::vector<std::string> buttonStrings, TgBot::InlineKeyboardMarkup::Ptr& kb){
     for(auto iter: buttonStrings){
@@ -23,7 +23,7 @@ int main() {
 
     CreateKayboard({"Регистрация"}, keyboardRegister);
     CreateKayboard({
-        "Медиа", "Дизайн", "Рабочка", "CММ", "Креаторка", "Фандрайзинг", "Волонтёрка", "Комитет"
+        "Медиа", "Дизайн", "Рабочка", "CММ", "Креаторка", "Фандрайзинг", "Волонтёрка", "Комитет", "Ютуб"
     }, selectDirections);
 
 
@@ -44,20 +44,13 @@ int main() {
     bot.getEvents().onCallbackQuery([&bot, &selectDirections](TgBot::CallbackQuery::Ptr query) {
         if (StringTools::startsWith(query->data, "Регистрация")) {
             bot.getApi().deleteMessage(query->message->chat->id, query->message->messageId);
-            bot.getApi().deleteMessage(query->message->chat->id, query->message->messageId-1);
-            bot.getApi().deleteMessage(query->message->chat->id, query->message->messageId-2);
+            bot.getApi().deleteMessage(query->message->chat->id, query->message->messageId - 1);
+            // bot.getApi().deleteMessage(query->message->chat->id, query->message->messageId - 2);
             std::string response = "Выбери свое направление";
             bot.getApi().sendMessage(query->message->chat->id, response, false, 0, selectDirections, "Markdown");
         }
     });
 
-    bot.getEvents().onAnyMessage([&bot](TgBot::Message::Ptr message) {
-        printf("Command: %s\n", message->text.c_str());
-        if (StringTools::startsWith(message->text, "/start") || StringTools::startsWith(message->text, "/Регистрация")) {
-            return;
-        }
-        // bot.getApi().sendMessage(message->chat->id, "Your message is: " + message->text);
-    });
     try {
         printf("Bot username: %s\n", bot.getApi().getMe()->username.c_str());
         TgBot::TgLongPoll longPoll(bot);

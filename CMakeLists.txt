@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10.2)
-project(echobot)
+project(studProjectBot)
 
 set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -16,6 +16,15 @@ if (CURL_FOUND)
     add_definitions(-DHAVE_CURL)
 endif()
 
-add_executable(echobot src/main.cpp src/include/user.cpp)
+add_executable(studProjectBot 
+    #Main:
+    src/main.cpp
+    
+    #Include:
+    include/essence/user.cpp
+    include/essence/supervisor.cpp
+    include/essence/chairman.cpp
+    )
+target_include_directories(studProjectBot PUBLIC include/)
 
-target_link_libraries(echobot /usr/local/lib/libTgBot.a ${CMAKE_THREAD_LIBS_INIT} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES} ${CURL_LIBRARIES})
+target_link_libraries(studProjectBot /usr/local/lib/libTgBot.a ${CMAKE_THREAD_LIBS_INIT} ${OPENSSL_LIBRARIES} ${Boost_LIBRARIES} ${CURL_LIBRARIES})
